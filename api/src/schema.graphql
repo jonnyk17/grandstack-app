@@ -11,6 +11,7 @@ type User {
   Height: String!
   Weight: Int!
   Event: [Events] @relationship(type: "COMPETED", direction: IN)
+  Records: [Record] @relationship(type: "PERSONALBEST", direction: IN)
   # reviews: [Review] @relationship(type: "WROTE", direction: OUT)
   # avgStars: Float
   #   @cypher(
@@ -25,10 +26,15 @@ type User {
 }
 type Events {
   event: String!
-  record: String!
   user: User @relationship(type: "COMPETED", direction: OUT)
+  record: Record @relationship(type: "RECORDFOREVENT", direction: OUT)
 }
+type Record{
+  record: String!
+  user:User @relationship(type: "PERSONALBEST", direction: OUT)
+  event:Events @relationship(type: "RECORDFOREVENT", direction: IN)
 
+}
 
 # # type Business {
 # #   businessId: ID!
@@ -107,4 +113,5 @@ type Query {
   #   #     statement: "MATCH (r:Review) WITH r.stars AS stars, COUNT(*) AS count ORDER BY stars RETURN {stars: stars, count: count}"
   #   #   )
 }
+
 

@@ -37,8 +37,8 @@ export default function SimpleSelect(props) {
           onChange={handleChange}
         >
           {props.list.map((option) => (
-            <MenuItem key={option.event} value={option.event}>
-              {option.event}
+            <MenuItem key={option} value={option}>
+              {option}
             </MenuItem>
           ))}
         </Select>

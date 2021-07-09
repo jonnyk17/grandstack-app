@@ -1,3 +1,4 @@
+//USER EVENT PAGE
 import React from 'react'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -20,10 +21,10 @@ const GET_USER_EVENTS = gql`
 
 
 export default function RecentReviews() {
-  const { loading, error, data } = useQuery(GET_USER_EVENTS, { variables: { userName: "Jonathon"}})
+  const { loading, error, data } = useQuery(GET_USER_EVENTS, { variables: { userName: "jk7"}})
   if (error) return <p>Error</p>
   if (loading) return <p>Loading</p>
- 
+  
   return (
     <>
     {data &&
