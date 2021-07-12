@@ -20,7 +20,9 @@ const GET_DATA_QUERY = gql`
   query User($userName: String!){
    User(userName: $userName) {
         event
-        
+        record {
+          record
+        }
       }
     }
   
@@ -35,7 +37,7 @@ export default function RatingsChart() {
  
   if (error) return <p>Error</p>
   if (loading) return <p>Loading</p>
-   console.log(data)
+  console.log(data)
   data.User.map((row) =>(
     arrEvent.push(row.event)
   ))

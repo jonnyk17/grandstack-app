@@ -106,7 +106,9 @@ type Record{
 # }
 
 type Query {
-  User(userName: String!): [Events] @cypher(statement: "MATCH (u:User {userName: $userName})<-[:COMPETED]-(event:Events) RETURN(event)")
+  User(userName: String!): [Events]  @cypher(statement: "MATCH (u:User {userName: $userName})<-[:PERSONALBEST]-(r:Record)<-[:RECORDFOREVENT]-(event:Events) RETURN event, r")
+
+
   #   # userCount: Int! @cypher(statement: "MATCH (u:User) RETURN COUNT(u)")
   #   # ratingsCount: [RatingCount]
   #   #   @cypher(

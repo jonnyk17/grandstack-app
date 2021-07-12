@@ -47,27 +47,37 @@ const GET_USER = gql`
       options: { limit: $first, skip: $offset, sort: $orderBy }
       where: $filter
     ) {
-      id: userId
-      name
-      age
-      sport
+      displayName
+      Age
+      Sport
+      
+      Records
+      {
+        record
+      }
+      Event{
       event
-      record
     }
+    }
+    
   }
+  
+  
+ 
 `
 
 function UserList(props) {
   const { classes } = props
   const [order, setOrder] = React.useState('ASC')
-  const [orderBy, setOrderBy] = React.useState('name')
+  const [orderBy, setOrderBy] = React.useState('displayName')
   const [page] = React.useState(0)
   const [rowsPerPage] = React.useState(10)
-  const [filterState, setFilterState] = React.useState({ usernameFilter: '' })
+  const [filterState, setFilterState] = React.useState({ displayNameFilter: '' })
+  
 
   const getFilter = () => {
-    return filterState.usernameFilter.length > 0
-      ? { name_CONTAINS: filterState.usernameFilter }
+    return filterState.displayNameFilter.length > 0
+      ? { displayName_CONTAINS: filterState.displayNameFilter }
       : {}
   }
 
@@ -91,7 +101,7 @@ function UserList(props) {
     setOrder(newOrder)
     setOrderBy(newOrderBy)
   }
-
+   //const { loading, error, data } = useQuery(GET_USER)
   const handleFilterChange = (filterName) => (event) => {
     const val = event.target.value
 
@@ -100,17 +110,26 @@ function UserList(props) {
       [filterName]: val,
     }))
   }
-  var arr=["none"]
+  const set= new Set()
+  if (error) return <p>Error</p>
+  if (loading) return <p>Loading</p>
+  
+  data.users.map((row) =>(
+    row.Event.map((row2) =>(
+      set.add(row2.event)
+    ))
+  ))
+  console.log(Array.from(set))
   return (
     <Paper className={classes.root}>
       <Title>Search Athletes</Title>
-      <SimpleSelect name="Search Event" list={arr}> </SimpleSelect>
+      <SimpleSelect name="Search Event" list={Array.from(set)}> </SimpleSelect>
       <TextField
         id="search"
         label="Search"
         className={classes.textField}
-        value={filterState.usernameFilter}
-        onChange={handleFilterChange('usernameFilter')}
+        value={filterState.displayNameFilter}
+        onChange={handleFilterChange('displayNameFilter')}
         margin="normal"
         variant="outlined"
         type="text"
@@ -127,22 +146,22 @@ function UserList(props) {
             <TableRow>
               <TableCell
                 key="name"
-                sortDirection={orderBy === 'name' ? order.toLowerCase() : false}
+                sortDirection={orderBy === 'displayName' ? order.toLowerCase() : false}
               >
                 <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
                   <TableSortLabel
-                    active={orderBy === 'name'}
+                    active={orderBy === 'displayName'}
                     direction={order.toLowerCase()}
-                    onClick={() => handleSortRequest('name')}
+                    onClick={() => handleSortRequest('displayName')}
                   >
                     Name
                   </TableSortLabel>
                 </Tooltip>
               </TableCell>
-              <TableCell key="age">Age</TableCell>
-              <TableCell key="sport">Sport</TableCell>
-              <TableCell key="event">Event</TableCell>
-              <TableCell key="record">Record</TableCell>
+              <TableCell key="Age">Age</TableCell>
+              <TableCell key="Sport">Sport</TableCell>
+              <TableCell key="Event">Event</TableCell>
+              <TableCell key="Record">Record</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -150,12 +169,12 @@ function UserList(props) {
               return (
                 <TableRow key={n.id}>
                   <TableCell component="th" scope="row">
-                    {n.name}
+                    {n.displayName}
                   </TableCell>
                   <TableCell>
-                    {n.avgStars ? n.avgStars.toFixed(2) : '-'}
+                    {n.Age}
                   </TableCell>
-                  <TableCell>{n.numReviews}</TableCell>
+                  <TableCell>{n.Sport}</TableCell>
                 </TableRow>
               )
             })}

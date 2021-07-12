@@ -10,10 +10,15 @@ import Title from './Title'
 
 
 const GET_USER_EVENTS = gql`
- query User($userName: String!){
-  User(userName: $userName) {
-    event
-    record
+query Query($usersWhere: UserWhere,$recordWhere: RecordWhere) {
+  users(where: $usersWhere) {
+    Event{
+      event
+      record(where: $recordWhere) {
+        record
+      }
+    }
+   
   }
 }
 `
@@ -21,9 +26,23 @@ const GET_USER_EVENTS = gql`
 
 
 export default function RecentReviews() {
-  const { loading, error, data } = useQuery(GET_USER_EVENTS, { variables: { userName: "jk7"}})
+  const { loading, error, data } = useQuery(GET_USER_EVENTS, { variables: { "usersWhere": {
+    "userName": "jk7"
+  },
+  "recordWhere": {
+    "user": {
+      "userName": "jk7"
+    }
+  }
+  }})
   if (error) return <p>Error</p>
   if (loading) return <p>Loading</p>
+  console.log(data)
+  data.users.map((row)=>(
+    row.Event.map((row2)=>(
+    console.log(row2.record.record)
+    ))
+  ))
   
   return (
     <>
@@ -38,12 +57,13 @@ export default function RecentReviews() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.User.map((row) => (
-            <TableRow key={row.event}>
-              <TableCell>{row.event}</TableCell>
-              <TableCell align="right"> {row.record}</TableCell>
-              
+          {data.users.map((row) => (
+            row.Event.map((row2)=>(
+              <TableRow key={row2.event}>
+              <TableCell>{row2.event}</TableCell>
+              <TableCell align="right"> {row2.record.record}</TableCell> 
             </TableRow>
+            ))
           ))}
         </TableBody>
       </Table>

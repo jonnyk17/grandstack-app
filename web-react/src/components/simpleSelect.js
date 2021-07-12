@@ -21,10 +21,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 export default function SimpleSelect(props) {
   const classes = useStyles()
-  const [age, setAge] = React.useState('')
+  const [choice, setChoice] = React.useState('')
 
   const handleChange = (event) => {
-    setAge(event.target.value)
+    setChoice(event.target.value)
   }
   return (
     <FormGroup row className={classes.formGroup}>
@@ -33,7 +33,7 @@ export default function SimpleSelect(props) {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
+          value={choice}
           onChange={handleChange}
         >
           {props.list.map((option) => (
