@@ -41,21 +41,21 @@ const GET_USER = gql`
     $first: Int
     $offset: Int
     $orderBy: [UserSort]
-    # $displayNameContains: String
-    # $event:String
-    # $recordsWhere: RecordWhere!
+     $displayNameContains: String
+     $eventContains:String
+    
   ) {
     users(
       options: { limit: $first, skip: $offset, sort: $orderBy }
-      # where: {displayName_CONTAINS: $displayNameContains, Event:{event: $event}}
+      where: {displayName_CONTAINS: $displayNameContains, Event:{event:  $eventContains}}
     ) {
       displayName
       Age
       Sport
 
-      # Records(where: $recordsWhere) {
-      #   record
-      # }
+      Records(where: {event:{event:  $eventContains}}) {
+        record
+      }
       Event {
         event
       }
@@ -75,7 +75,7 @@ function UserList(props) {
   const [page] = React.useState(0);
   const [rowsPerPage] = React.useState(10);
   const [filterState, setFilterState] = React.useState("");
-  const [eventState, setEventState] =React.useState(" ");
+  const [eventState, setEventState] =React.useState("");
 
   //const {/*loading: recordLoading, error: recordError, data: recordData, */ refetch: refetchRecord }=useQuery(GET_RECORD, {skip: true})
 
@@ -84,7 +84,8 @@ function UserList(props) {
       first: rowsPerPage,
       offset: rowsPerPage * page,
       orderBy: { [orderBy]: order },
-     // recordsWhere: {}
+      eventContains:"",
+      recordsWhere: {}
     //    //filter: getFilter(),
        
      }
@@ -108,8 +109,8 @@ function UserList(props) {
     const val = event.target.value;
     setFilterState(val)
     refetch({
-      displayNameContains: "J",
-      event:"100m"
+      displayNameContains: val,
+      
     })
   
     // setFilterState((oldFilterState) => ({
@@ -134,15 +135,21 @@ function UserList(props) {
     return data.records
   } */
   const eventFilter = async (event)=>{   
-    setEventState(event)
-    await refetch({
-      event:"100m",
-      // recordsWhere: {
-      //   event: {
-      //     event:"100m"
-      //   }
-      // }
-      })
+    const val = event;
+    setEventState(val)
+    refetch({
+      
+        eventContains: val
+      
+    })
+    // setEventState(event)
+    // console.log(eventState)
+    // await refetch({
+      
+    //       event:"100m"
+        
+      
+    //   })
     //setuserState(data.users.filter(eventData))
   };
 
@@ -214,7 +221,7 @@ function UserList(props) {
                 <TableCell>{n.Age}</TableCell>
                 <TableCell>{n.Sport}</TableCell>
                 <TableCell>{String(eventState)!="" ? String(eventState):""}</TableCell>
-                {/* <TableCell>{n.Records.map(({ record }) => <div key={record}>{record}</div>)}</TableCell> */}
+                <TableCell>{n.Records.map(({ record }) => <div key={record}>{record}</div>)}</TableCell>
               </TableRow>
             );
           })}
