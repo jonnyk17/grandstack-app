@@ -25,7 +25,9 @@ export default function SimpleSelect(props) {
 
   const handleChange = (event) => {
     setChoice(event.target.value)
+    if (props.handleChange) props.handleChange(event)
   }
+
   return (
     <FormGroup row className={classes.formGroup}>
       <FormControl className={classes.formControl}>

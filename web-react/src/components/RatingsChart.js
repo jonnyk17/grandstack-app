@@ -1,4 +1,3 @@
-//COMPARE PAGE
 import React from 'react'
 import { useTheme } from '@material-ui/core/styles'
 import SimpleSelect from './simpleSelect'
@@ -32,7 +31,7 @@ export default function RatingsChart() {
   const theme = useTheme()
   const arr = ["Age", "Sport", "Weight"]
 
-  const { loading, error, data } = useQuery(GET_DATA_QUERY, {variables: { userName: "jk7"}})
+  const { loading, error, data} = useQuery(GET_DATA_QUERY, {variables: { userName: "jk7"}})
   const arrEvent=[]
  
   if (error) return <p>Error</p>
