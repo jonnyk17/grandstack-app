@@ -47,7 +47,7 @@ const GET_USER = gql`
   ) {
     users(
       options: { limit: $first, skip: $offset, sort: $orderBy }
-      where: {displayName_CONTAINS: $displayNameContains, Event:{event:  $eventContains}}
+      where: {displayName_CONTAINS: $displayNameContains, Event:{event_CONTAINS:  $eventContains}}
     ) {
       displayName
       Age
