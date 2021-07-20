@@ -47,7 +47,7 @@ const GET_USER = gql`
   ) {
     users(
       options: { limit: $first, skip: $offset, sort: $orderBy }
-      where: {displayName_CONTAINS: $displayNameContains, Event:{event:  $eventContains}}
+      where: {displayName_CONTAINS: $displayNameContains, Event:{event_CONTAINS:  $eventContains}}
     ) {
       displayName
       Age
@@ -104,12 +104,12 @@ function UserList(props) {
     setOrderBy(newOrderBy);
   };
   //const { loading, error, data } = useQuery(GET_USER)
-  const handleFilterChange = (event) => {
+  const handleFilterChange =  (event) => {
     //event.preventDefault()
     const val = event.target.value;
     setFilterState(val)
     refetch({
-      displayNameContains: val,
+      displayNameContains: val
       
     })
   
@@ -159,16 +159,17 @@ function UserList(props) {
   return (
     <Paper className={classes.root}>
       <Title>Search Athletes</Title>
+      
       <SimpleSelect
         name="Search Event"
-        list={data.events.map(({ event }) => event)}
+        list={data ? data.events.map(({ event }) => event): []}
         value={eventState}
         handleChange={(e)=>eventFilter(e.target.value)}
       >
         {" "}
       </SimpleSelect>
-      {/* {loading && !error && <p>Loading...</p>}
-      {error && !loading && <p>Error</p>} */}
+      {loading && !error && <p>Loading...</p>}
+      {error && !loading && <p>Error</p>} 
       <TextField
         id="search"
         label="Search"
@@ -183,9 +184,9 @@ function UserList(props) {
         }}
       />
 
-      {/* {loading && !error && <p>Loading...</p>}
+      {loading && !error && <p>Loading...</p>}
       {error && !loading && <p>Error</p>}
-      {data && !loading && !error && ( */}
+      {data && !loading && !error && !loading && 
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
@@ -226,7 +227,7 @@ function UserList(props) {
             );
           })}
         </TableBody>
-      </Table>
+      </Table>}
     </Paper>
   );
 }

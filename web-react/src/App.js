@@ -1,9 +1,9 @@
 import React from 'react'
-
+import "./App.scss"
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
-
-import UserList from './components/UserList'
-
+import {AppPage} from './AppPage';
+import UserList from './components/UserList';
+//import {Login} from "./components/loginFolder/index";
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -30,7 +30,7 @@ import {
 } from '@material-ui/icons'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import Dashboard from './components/Dashboard'
-
+import Button from '@material-ui/core/Button';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -131,6 +131,12 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: '75px',
     paddingRight: '20px',
   },
+  login:{
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+
 }))
 
 export default function App() {
@@ -144,6 +150,7 @@ export default function App() {
   }
 
   return (
+    
     <Router>
       <div className={classes.root}>
         <CssBaseline />
@@ -163,6 +170,7 @@ export default function App() {
               )}
             >
               <MenuIcon />
+              
             </IconButton>
             <img
               className={classes.appBarImage}
@@ -178,6 +186,11 @@ export default function App() {
             >
               Welcome To GRANDstack App
             </Typography>
+            <Link to="/login" className={classes.login}>
+              <Button variant="contained" color="primary">
+                Login
+              </Button>
+            </Link>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -221,6 +234,7 @@ export default function App() {
               <Route exact path="/" component={Dashboard} />
               <Route exact path="/businesses" component={UserList} />
               <Route exact path="/users" component={UserList} />
+              <Route exact path="/login" component={AppPage}/>
             </Switch>
 
             <Box pt={4}>
