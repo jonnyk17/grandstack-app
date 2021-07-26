@@ -1,11 +1,13 @@
+//import { useMutation, gql } from '@apollo/client'
 import React from "react";
 import loginImg from "../../login.svg";
 
 export class Register extends React.Component {
+  
   constructor(props) {
     super(props);
   }
-
+  
   render() {
     return (
       <div className="base-container" ref={this.props.containerRef}>
@@ -15,13 +17,10 @@ export class Register extends React.Component {
             <img src={loginImg} />
           </div>
           <div className="form">
+           
             <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input type="text" name="username" placeholder="username" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input type="text" name="password" placeholder="password" />
+              <label htmlFor="diaplayname">Display Name</label>
+              <input type="text" name="displayname" placeholder="displayname" />
             </div>
             <div className="form-group">
               <label htmlFor="sport">Sport</label>
