@@ -4,7 +4,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 //import {AppPage} from './AppPage';
 import {Login} from './components/loginFolder/login'
 import UserList from './components/UserList';
-import {LogoutButton} from "./components/loginFolder/index";
+import {LogoutButton, Register} from "./components/loginFolder/index";
 import{addEventPage} from "./addEventPage"
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
@@ -33,6 +33,11 @@ import {
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import Dashboard from './components/Dashboard'
 import Button from '@material-ui/core/Button';
+import Callback from './components/callback';
+import Checklogin from './components/checkLogin'
+import { useAuth0 } from '@auth0/auth0-react'
+import { PrivateRoute } from './components/privateRoute'
+
 
 function Copyright() {
   return (
@@ -151,10 +156,12 @@ export default function App() {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-
+  const {isAuthenticated, isLoading}=useAuth0();
+  if (isLoading) return <p>Loading</p>
   return (
     
     <Router>
+      
       <div className={classes.root}>
         <CssBaseline />
         <AppBar
@@ -187,9 +194,9 @@ export default function App() {
               noWrap
               className={classes.title}
             >
-              Welcome To GRANDstack App
+              The Player Portal
             </Typography>
-            <Link to="/addevent" className={classes.navLink}>
+            <Link to= {isAuthenticated ? '/addevent' : ''}  className={classes.navLink}>
             <Button variant="contained" color="primary">
                 Add Event
               </Button>
@@ -212,7 +219,7 @@ export default function App() {
           </div>
           <Divider />
           <List>
-            <Link to="/" className={classes.navLink}>
+            <Link to={isAuthenticated ? '/profile' : ''}  className={classes.navLink}>
               <ListItem button>
                 <ListItemIcon>
                   <AccountBoxIcon />
@@ -221,7 +228,7 @@ export default function App() {
               </ListItem>
             </Link>
 
-            <Link to="/users" className={classes.navLink}>
+            <Link to={isAuthenticated ? '/users' : ''} className={classes.navLink}>
               <ListItem button>
                 <ListItemIcon>
                   <PeopleIcon />
@@ -236,11 +243,14 @@ export default function App() {
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg" className={classes.container}>
             <Switch>
-              <Route exact path="/" component={Dashboard} />
-              <Route exact path="/businesses" component={UserList} />
-              <Route exact path="/users" component={UserList} />
+              <Route exact path="/" component={Checklogin} />
+              <PrivateRoute exact path="/profile" component={Dashboard} />
+              <PrivateRoute exact path="/users" component={UserList} />
               <Route exact path="/login" component={Login}/>
-              <Route exact path="/addevent" component={addEventPage}/>
+              <PrivateRoute exact path="/register" component={Register}/>
+              <PrivateRoute exact path="/addevent" component={addEventPage}/>
+              <Route exact path="/callback" component={Callback}/>
+             
             </Switch>
 
             <Box pt={4}>
@@ -249,6 +259,7 @@ export default function App() {
           </Container>
         </main>
       </div>
-    </Router>
-  )
+      </Router>
+    );
+  
 }

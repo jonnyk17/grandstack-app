@@ -30,7 +30,7 @@ export class addEventPage extends React.Component {
 
   render() {
     const { isLogginActive } = this.state;
-    const current = isLogginActive ? "Register" : "Login";
+    const current = isLogginActive ? "Add Event" : "Back";
     const currentActive = isLogginActive ? "login" : "register";
     return (
       <div className="App">

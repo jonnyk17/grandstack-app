@@ -5,11 +5,12 @@ scalar PointInput
 type User {
   displayName: String!
   userName: String!
-  password: String!
+  #password: String!
   Sport: String!
-  Age: Int!
+  Age: String!
+  id: String!
   Height: String!
-  Weight: Int!
+  Weight: String!
   Event: [Events] @relationship(type: "COMPETED", direction: IN)
   Records: [Record] @relationship(type: "PERSONALBEST", direction: IN)
   # reviews: [Review] @relationship(type: "WROTE", direction: OUT)

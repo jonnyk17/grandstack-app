@@ -17,7 +17,7 @@ const Main = () => (
     <Auth0Provider
     domain="dev-jxxen9p2.us.auth0.com"
     clientId="s0lnhSpSrLXkQ5oYTfNisNkS6tjtoSt0"
-    redirectUri={window.location.origin}
+    redirectUri={"http://localhost:3000/callback"}
   >
     <App />
   </Auth0Provider>

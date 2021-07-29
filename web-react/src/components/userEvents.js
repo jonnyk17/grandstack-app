@@ -6,6 +6,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { useQuery, gql } from '@apollo/client'
 import Title from './Title'
+import { useAuth0 } from "@auth0/auth0-react"
 
 
 const GET_USER_EVENTS = gql`
@@ -24,16 +25,27 @@ query Query($usersWhere: UserWhere,$recordWhere: RecordWhere) {
 
 
 
-export default function RecentReviews() {
+export default function userEvents() {
+  const {user, isLoading} =useAuth0();
+  if (isLoading) return <p>Loading</p>
+  if (user)
+  var id1=user.sub
+  else
+    id1=""
   const { loading, error, data } = useQuery(GET_USER_EVENTS, { variables: { "usersWhere": {
-    "userName": "jk7"
+    "id": id1
+  
   },
   "recordWhere": {
     "user": {
-      "userName": "jk7"
+      "id": id1
     }
   }
   }})
+
+
+
+
   if (error) return <p>Error</p>
   if (loading) return <p>Loading</p>
   console.log(data)
