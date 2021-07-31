@@ -43,7 +43,7 @@ export default function Deposits() {
 
     
     
-    if(data.users.length !== 0){
+    if(user){
     if (error) return <p>Error</p>
     if (loading) return <p>Loading</p>
     // while(data.users.length===0){

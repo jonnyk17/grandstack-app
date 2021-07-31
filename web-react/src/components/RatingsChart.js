@@ -16,14 +16,17 @@ import { useQuery, gql } from '@apollo/client'
 import Title from './Title'
 
 const GET_DATA_QUERY = gql`
-  query User($userName: String!){
-   User(userName: $userName) {
-        event
-        record {
-          record
-        }
-      }
-    }
+  query Query($usersWhere: UserWhere) {
+ 
+ users(where: $usersWhere) {
+   Event {
+     event
+     record{
+       record
+     }
+   }
+ }
+}
   
 `
 
@@ -31,13 +34,13 @@ export default function RatingsChart() {
   const theme = useTheme()
   const arr = ["Age", "Sport", "Weight"]
 
-  const { loading, error, data} = useQuery(GET_DATA_QUERY, {variables: { userName: "jk7"}})
+  const { loading, error, data} = useQuery(GET_DATA_QUERY, {variables: { "usersWhere":{"displayName": "Jonny"}}})
   const arrEvent=[]
  
   if (error) return <p>Error</p>
   if (loading) return <p>Loading</p>
   console.log(data)
-  data.User.map((row) =>(
+  data.users.map((row) =>(
     arrEvent.push(row.event)
   ))
   return (
