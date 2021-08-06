@@ -38,6 +38,9 @@ Next you need to go to open the manage screen from the options in the 3 dot stac
 
 ![New desktop graph, manage tab](img/desktop-new-graph.png)
 
+neo4j
+3vQtfxI2fRq2BjZ-scaan_wwA05_Vfl--ZzuBqClyrE
+
 And install the apoc plugin, green button at the top of the list.
 
 ![Plugins](img/apoc-install.png)
