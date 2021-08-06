@@ -1,6 +1,6 @@
 import React from 'react'
 import "./App.scss"
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import { Switch, Route, HashRouter as Router } from 'react-router-dom'
 import { Login } from './components/loginFolder/login'
 import UserList from './components/UserList';
 import { LogoutButton, Register } from "./components/loginFolder/index";
@@ -251,7 +251,7 @@ export default function App() {
               <PrivateRoute exact path="/addevent" component={addEventPage} />
               <Route exact path="/callback" component={Callback} />
               <Route render={()=>
-                <div>Not Found</div>
+                <div>Not Found </div>
               } />
             </Switch>
 
