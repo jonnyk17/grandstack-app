@@ -3,7 +3,7 @@
 
 const { ApolloServer } = require('apollo-server-lambda')
 const { makeAugementedSchema } = require('neo4j-graphql-js')
-import { Neo4jGraphQL } from '@neo4j/graphql'
+//import { Neo4jGraphQL } from '@neo4j/graphql'
 const neo4j = require('neo4j-driver')
 
 // This module is copied during the build step

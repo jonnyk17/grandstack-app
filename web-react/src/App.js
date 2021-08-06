@@ -250,7 +250,9 @@ export default function App() {
               <PrivateRoute exact path="/register" component={Register} />
               <PrivateRoute exact path="/addevent" component={addEventPage} />
               <Route exact path="/callback" component={Callback} />
-
+              <Route render={()=>
+                <div>Not Found</div>
+              } />
             </Switch>
 
             <Box pt={4}>
