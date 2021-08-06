@@ -1,30 +1,28 @@
 import React from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
-import {Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
-export default function callback(){
-    const {isLoading, isAuthenticated}=useAuth0();
-    
+export default function callback() {
+    const { isLoading, isAuthenticated } = useAuth0();
+
     if (isLoading) return <p>Loading</p>
-    
-    if(isAuthenticated){
+
+    if (isAuthenticated) {
         return (
             <Redirect
-                    to={{
-                        pathname:"/profile",
-                        
-                    }} 
-                    />
+                to={{
+                    pathname: "/profile",
 
+                }}
+            />
         )
     }
-    else{
+    else {
         return (
-                
-             <Redirect
+            <Redirect
                 to={{
-                    pathname:"/login",
-                    }} 
+                    pathname: "/login",
+                }}
             />
 
         )

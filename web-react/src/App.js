@@ -1,13 +1,13 @@
 import React from 'react'
 import "./App.scss"
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
-//import {AppPage} from './AppPage';
-import {Login} from './components/loginFolder/login'
+import { Login } from './components/loginFolder/login'
 import UserList from './components/UserList';
-import {LogoutButton, Register} from "./components/loginFolder/index";
-import{addEventPage} from "./addEventPage"
+import { LogoutButton, Register } from "./components/loginFolder/index";
+import { addEventPage } from "./addEventPage"
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
+import Nike from './nike.png'
 import {
   CssBaseline,
   Drawer,
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+    paddingRight: 24,
   },
   toolbarIcon: {
     display: 'flex',
@@ -136,10 +136,10 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit',
   },
   appBarImage: {
-    maxHeight: '75px',
+    maxHeight: '35px',
     paddingRight: '20px',
   },
-  login:{
+  login: {
     '& > *': {
       margin: theme.spacing(1),
     },
@@ -156,12 +156,12 @@ export default function App() {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-  const {isAuthenticated, isLoading}=useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
   if (isLoading) return <p>Loading</p>
   return (
-    
+
     <Router>
-      
+
       <div className={classes.root}>
         <CssBaseline />
         <AppBar
@@ -180,11 +180,11 @@ export default function App() {
               )}
             >
               <MenuIcon />
-              
+
             </IconButton>
             <img
               className={classes.appBarImage}
-              src="img/grandstack.png"
+              src={Nike}
               alt="GRANDstack logo"
             />
             <Typography
@@ -196,13 +196,13 @@ export default function App() {
             >
               The Player Portal
             </Typography>
-            <Link to= {isAuthenticated ? '/addevent' : ''}  className={classes.navLink}>
-            <Button variant="contained" color="primary">
+            <Link to={isAuthenticated ? '/addevent' : ''} className={classes.navLink}>
+              <Button variant="contained" color="primary">
                 Add Event
               </Button>
-              </Link>
-                <LogoutButton />
-                
+            </Link>
+            <LogoutButton />
+
           </Toolbar>
         </AppBar>
         <Drawer
@@ -219,7 +219,7 @@ export default function App() {
           </div>
           <Divider />
           <List>
-            <Link to={isAuthenticated ? '/profile' : ''}  className={classes.navLink}>
+            <Link to={isAuthenticated ? '/profile' : ''} className={classes.navLink}>
               <ListItem button>
                 <ListItemIcon>
                   <AccountBoxIcon />
@@ -246,11 +246,11 @@ export default function App() {
               <Route exact path="/" component={Checklogin} />
               <PrivateRoute exact path="/profile" component={Dashboard} />
               <PrivateRoute exact path="/users" component={UserList} />
-              <Route exact path="/login" component={Login}/>
-              <PrivateRoute exact path="/register" component={Register}/>
-              <PrivateRoute exact path="/addevent" component={addEventPage}/>
-              <Route exact path="/callback" component={Callback}/>
-             
+              <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path="/register" component={Register} />
+              <PrivateRoute exact path="/addevent" component={addEventPage} />
+              <Route exact path="/callback" component={Callback} />
+
             </Switch>
 
             <Box pt={4}>
@@ -259,7 +259,7 @@ export default function App() {
           </Container>
         </main>
       </div>
-      </Router>
-    );
-  
+    </Router>
+  );
+
 }

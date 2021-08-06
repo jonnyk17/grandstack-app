@@ -6,12 +6,11 @@ export class AppPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLogginActive: true
+      isLogginActive: true,
     };
   }
 
   componentDidMount() {
-    //Add .right by default
     this.rightSide.classList.add("right");
   }
 
@@ -25,7 +24,9 @@ export class AppPage extends React.Component {
       this.rightSide.classList.remove("left");
       this.rightSide.classList.add("right");
     }
-    this.setState(prevState => ({ isLogginActive: !prevState.isLogginActive }));
+    this.setState((prevState) => ({
+      isLogginActive: !prevState.isLogginActive,
+    }));
   }
 
   render() {
@@ -35,18 +36,18 @@ export class AppPage extends React.Component {
     return (
       <div className="App">
         <div className="login">
-          <div className="container" ref={ref => (this.container = ref)}>
+          <div className="container" ref={(ref) => (this.container = ref)}>
             {isLogginActive && (
-              <Login containerRef={ref => (this.current = ref)} />
+              <Login containerRef={(ref) => (this.current = ref)} />
             )}
             {!isLogginActive && (
-              <Register containerRef={ref => (this.current = ref)} />
+              <Register containerRef={(ref) => (this.current = ref)} />
             )}
           </div>
           <RightSide
             current={current}
             currentActive={currentActive}
-            containerRef={ref => (this.rightSide = ref)}
+            containerRef={(ref) => (this.rightSide = ref)}
             onClick={this.changeState.bind(this)}
           />
         </div>
@@ -55,7 +56,7 @@ export class AppPage extends React.Component {
   }
 }
 
-const RightSide = props => {
+const RightSide = (props) => {
   return (
     <div
       className="right-side"
@@ -68,5 +69,3 @@ const RightSide = props => {
     </div>
   );
 };
-
-//export default App;

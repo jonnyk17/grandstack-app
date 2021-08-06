@@ -27,6 +27,7 @@ type User {
 }
 type Events {
   event: String!
+  eventType:String!
   user: User @relationship(type: "COMPETED", direction: OUT)
   record: Record @relationship(type: "RECORDFOREVENT", direction: OUT)
 }

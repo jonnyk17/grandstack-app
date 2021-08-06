@@ -1,7 +1,6 @@
 import React from "react";
 import sportImg from "../../sport.svg";
 import { Link } from 'react-router-dom'
-//import  App  from "../../App";
 export class ReturnToProfile extends React.Component {
   constructor(props) {
     super(props);

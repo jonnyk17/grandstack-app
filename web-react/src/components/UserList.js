@@ -3,7 +3,6 @@ import React from "react";
 import { useQuery, gql, NetworkStatus } from "@apollo/client";
 import { withStyles } from "@material-ui/core/styles";
 import SimpleSelect from "./simpleSelect";
-//import { useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -15,7 +14,6 @@ import {
   TableSortLabel,
   TextField,
 } from "@material-ui/core";
-
 import Title from "./Title";
 
 const styles = (theme) => ({
@@ -75,21 +73,17 @@ function UserList(props) {
   const [page] = React.useState(0);
   const [rowsPerPage] = React.useState(10);
   const [filterState, setFilterState] = React.useState("");
-  const [eventState, setEventState] =React.useState("");
+  const [eventState, setEventState] = React.useState("");
 
-  //const {/*loading: recordLoading, error: recordError, data: recordData, */ refetch: refetchRecord }=useQuery(GET_RECORD, {skip: true})
-
-  const { loading, data, error, refetch, networkStatus} = useQuery(GET_USER, {
-     variables: {
+  const { loading, data, error, refetch, networkStatus } = useQuery(GET_USER, {
+    variables: {
       first: rowsPerPage,
       offset: rowsPerPage * page,
       orderBy: { [orderBy]: order },
-      eventContains:"",
+      eventContains: "",
       recordsWhere: {}
-    //    //filter: getFilter(),
-       
-     }
-    
+    }
+
   });
 
   const handleSortRequest = (property) => {
@@ -103,73 +97,42 @@ function UserList(props) {
     setOrder(newOrder);
     setOrderBy(newOrderBy);
   };
-  //const { loading, error, data } = useQuery(GET_USER)
-  const handleFilterChange =  (event) => {
-    //event.preventDefault()
+
+  const handleFilterChange = (event) => {
     const val = event.target.value;
     setFilterState(val)
     refetch({
       displayNameContains: val
-      
+
     })
-  
-    // setFilterState((oldFilterState) => ({
-    //   ...oldFilterState,
-    //   [filterName]: val,
-    // }));
   };
 
-  // if (error) return <p>Error</p>;
-  // if (loading) return <p>Loading</p>;
-  /* function getRecord(d){
-    const { data } = await refetchRecord({ "recordsWhere": {
-      "user": {
-        "displayName": d.displayName
-      },
-      "event": {
-        "event": String(eventState)
-      }
-    }}).catch(err => console.log(err))
-
-    console.log(data)
-    return data.records
-  } */
-  const eventFilter = async (event)=>{   
+  const eventFilter = async (event) => {
     const val = event;
     setEventState(val)
     refetch({
-      
-        eventContains: val
-      
+
+      eventContains: val
+
     })
-    // setEventState(event)
-    // console.log(eventState)
-    // await refetch({
-      
-    //       event:"100m"
-        
-      
-    //   })
-    //setuserState(data.users.filter(eventData))
   };
 
   if (error) return <p>Error</p>;
-  if (loading &&NetworkStatus.refetch!=networkStatus&&NetworkStatus.setVariables!=networkStatus) return <p>Loading</p>;
-  console.log(eventState)
+  if (loading && NetworkStatus.refetch != networkStatus && NetworkStatus.setVariables != networkStatus) return <p>Loading</p>;
   return (
     <Paper className={classes.root}>
       <Title>Search Athletes</Title>
-      
+
       <SimpleSelect
         name="Search Event"
-        list={data ? data.events.map(({ event }) => event): []}
+        list={data ? data.events.map(({ event }) => event) : []}
         value={eventState}
-        handleChange={(e)=>eventFilter(e.target.value)}
+        handleChange={(e) => eventFilter(e.target.value)}
       >
         {" "}
       </SimpleSelect>
       {loading && !error && <p>Loading...</p>}
-      {error && !loading && <p>Error</p>} 
+      {error && !loading && <p>Error</p>}
       <TextField
         id="search"
         label="Search"
@@ -186,48 +149,48 @@ function UserList(props) {
 
       {loading && !error && <p>Loading...</p>}
       {error && !loading && <p>Error</p>}
-      {data && !loading && !error && !loading && 
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell
-              key="name"
-              sortDirection={
-                orderBy === "displayName" ? order.toLowerCase() : false
-              }
-            >
-              <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
-                <TableSortLabel
-                  active={orderBy === "displayName"}
-                  direction={order.toLowerCase()}
-                  onClick={() => handleSortRequest("displayName")}
-                >
-                  Name
-                </TableSortLabel>
-              </Tooltip>
-            </TableCell>
-            <TableCell key="Age">Age</TableCell>
-            <TableCell key="Sport">Sport</TableCell>
-            <TableCell key="Event">Event</TableCell>
-            <TableCell key="Record">Record</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.users.map((n) => {
-            return (
-              <TableRow key={n.id}>
-                <TableCell component="th" scope="row">
-                  {n.displayName}
-                </TableCell>
-                <TableCell>{n.Age}</TableCell>
-                <TableCell>{n.Sport}</TableCell>
-                <TableCell>{String(eventState)!="" ? String(eventState):""}</TableCell>
-                <TableCell>{n.Records.map(({ record }) => <div key={record}>{record}</div>)}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>}
+      {data && !loading && !error && !loading &&
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell
+                key="name"
+                sortDirection={
+                  orderBy === "displayName" ? order.toLowerCase() : false
+                }
+              >
+                <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
+                  <TableSortLabel
+                    active={orderBy === "displayName"}
+                    direction={order.toLowerCase()}
+                    onClick={() => handleSortRequest("displayName")}
+                  >
+                    Name
+                  </TableSortLabel>
+                </Tooltip>
+              </TableCell>
+              <TableCell key="Age">Age</TableCell>
+              <TableCell key="Sport">Sport</TableCell>
+              <TableCell key="Event">Event</TableCell>
+              <TableCell key="Record">Record</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.users.map((n) => {
+              return (
+                <TableRow key={n.id}>
+                  <TableCell component="th" scope="row">
+                    {n.displayName}
+                  </TableCell>
+                  <TableCell>{n.Age}</TableCell>
+                  <TableCell>{n.Sport}</TableCell>
+                  <TableCell>{String(eventState) != "" ? String(eventState) : ""}</TableCell>
+                  <TableCell>{n.Records.length != 0 ? n.Records[0].record : ""}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>}
     </Paper>
   );
 }

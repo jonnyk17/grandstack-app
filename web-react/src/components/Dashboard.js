@@ -23,7 +23,7 @@ export default function Dashboard() {
     fixedHeight: {
       height: 500,
     },
-     fixedHeightProfile: {
+    fixedHeightProfile: {
       height: 150,
     }
   }))

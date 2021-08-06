@@ -3,9 +3,9 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function FreeSolo({ list, ...props }) {
-    
+
   return (
-    <div style={{ width:290 }}>
+    <div style={{ width: 290 }}>
       <Autocomplete
         id="free-solo-demo"
         freeSolo
@@ -15,6 +15,6 @@ export default function FreeSolo({ list, ...props }) {
           <TextField {...params} label="Event" margin="normal" variant="outlined" />
         )}
       />
-      </div>
-      );
-    }
+    </div>
+  );
+}

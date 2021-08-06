@@ -15,12 +15,12 @@ const client = new ApolloClient({
 const Main = () => (
   <ApolloProvider client={client}>
     <Auth0Provider
-    domain="dev-jxxen9p2.us.auth0.com"
-    clientId="s0lnhSpSrLXkQ5oYTfNisNkS6tjtoSt0"
-    redirectUri={"http://localhost:3000/callback"}
-  >
-    <App />
-  </Auth0Provider>
+      domain="dev-jxxen9p2.us.auth0.com"
+      clientId="s0lnhSpSrLXkQ5oYTfNisNkS6tjtoSt0"
+      redirectUri={"http://localhost:3000/callback"}
+    >
+      <App />
+    </Auth0Provider>
   </ApolloProvider>
 )
 
