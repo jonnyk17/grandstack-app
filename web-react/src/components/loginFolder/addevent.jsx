@@ -197,6 +197,7 @@ export const AddEvent = () => {
       formState.recordType != "" &&
       !data.events.find((e) => e.event === formState.event)
     ) {
+      console.log("ok")
       newEvent({
         variables: {
           createEventsInput: [
