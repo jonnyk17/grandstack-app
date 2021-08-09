@@ -1,5 +1,5 @@
-import { useQuery, useMutation } from "@apollo/client";
-import gql from "graphql-tag";
+import { useQuery, useMutation, gql } from "@apollo/client";
+
 import React from "react";
 import sportImg from "../../sport.svg";
 import SimpleSelect from "../simpleSelect";
@@ -38,6 +38,13 @@ const CONNECT_EVENT = gql`
       users {
         displayName
       }
+    }
+  }
+`;
+const DELETE_RECORD = gql`
+  mutation Mutation($deleteRecordsWhere: RecordWhere) {
+    deleteRecords(where: $deleteRecordsWhere) {
+      nodesDeleted
     }
   }
 `;
@@ -187,6 +194,7 @@ export const AddEvent = () => {
     setSnackbar("");
   };
   const [newEvent] = useMutation(CREATE_EVENT);
+  const [deleteRecord] = useMutation(DELETE_RECORD);
   const [connect] = useMutation(CONNECT_EVENT);
   if (error) return <p>Error</p>;
   if (loading) return <p>Loading</p>;
@@ -197,7 +205,6 @@ export const AddEvent = () => {
       formState.recordType != "" &&
       !data.events.find((e) => e.event === formState.event)
     ) {
-      console.log("ok")
       newEvent({
         variables: {
           createEventsInput: [
@@ -231,6 +238,11 @@ export const AddEvent = () => {
             },
           ],
         },
+        refetchQueries: [
+          {
+            query: GET_EVENT,
+          },
+        ],
       });
       setSnackbar({ severity: "success", message: "Event Added" });
     } else if (
@@ -239,6 +251,18 @@ export const AddEvent = () => {
       formState.recordType != "" &&
       data.events.find((e) => e.event === formState.event)
     ) {
+      deleteRecord({
+        variables: {
+          deleteRecordsWhere: {
+            user: {
+              id: user.sub,
+              Event: {
+                event: formState.event,
+              },
+            },
+          },
+        },
+      });
       connect({
         variables: {
           updateUsersWhere: {
